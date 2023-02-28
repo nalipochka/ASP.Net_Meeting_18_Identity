@@ -1,0 +1,26 @@
+﻿
+@{
+
+}
+
+@model LoginViewModel
+<form asp-action="Login" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <input type="hidden" asp-for="ReturnUrl"/>
+    <div class="mb-3">
+        <label asp-for="Login" class="form-label"></label>
+        <input asp-for="Login" class="form-control" />
+        <span asp-validation-for="Login" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Password" class="form-label"></label>
+        <input asp-for="Password" class="form-control" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="IsPersistent" class="form-check-label"></label>
+        <input asp-for="IsPersistent" type="checkbox" class="form-check" />
+        <span asp-validation-for="IsPersistent" class="text-danger"></span>
+    </div>
+    <input type="submit" value="Login" class="btn btn-primary" />
+</form>

@@ -1,0 +1,39 @@
+﻿@{
+
+}
+
+@model AddProductViewModel
+
+<h2>Add new product</h2>
+
+<form asp-action="AddProduct" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="product.Title" class="control-label"></label>
+        <input asp-for="product.Title" class="form-control" />
+        <span asp-validation-for="product.Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="product.Price" class="control-label"></label>
+        <input asp-for="product.Price" class="form-control" />
+        <span asp-validation-for="product.Price" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="product.Count" class="control-label"></label>
+        <input asp-for="product.Count" class="form-control" />
+        <span asp-validation-for="product.Count" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="product.Category" class="control-label"></label>
+        <select asp-for="product.CategoryId" class="form-control" asp-items="@Model.CategoriesSl"></select>
+        <span asp-validation-for="product.CategoryId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Photos" class="control-label"></label>
+        <input asp-for="Photos" type="file" class="form-control" multiple/>
+        <span asp-validation-for="Photos" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Add product :)" class="btn btn-primary"/>
+    </div>
+</form>

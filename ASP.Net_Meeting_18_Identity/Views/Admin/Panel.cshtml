@@ -1,0 +1,36 @@
+﻿@{
+
+}
+
+@model PanelViewModel
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Products</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <a asp-action="AddProduct" asp-controller="Admin" class="btn btn-primary">Add Product</a>
+        </div>
+        <div class="col-md-4">
+            <a asp-action="AddCategory" asp-controller="Admin" class="btn btn-primary">Add Category</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    @foreach (var product in Model.Products)
+    {
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="card">
+                    <img class="card-img-top" src=@(Model.Photos.Where(p=>p.ProductId==product.Id).FirstOrDefault()!.PhotoUrl) alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Title</h5>
+                        <p class="card-text">@product.Price</p>
+                    </div>
+                </div>
+            </div>
+    }
+</div>
