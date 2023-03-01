@@ -1,0 +1,21 @@
+﻿@{
+
+}
+@model ChangeRolesViewModel
+
+<h1>Change Roles for User @Model.UserName</h1>
+
+<form asp-action="ChangeUserRoles" method="post" class="mb-3">
+    <input type="hidden" value="@Model.UserId" />
+    @foreach (var role in Model.AllRoles)
+    {
+        <input type="checkbox" name="roles" @(Model.UserRoles.Contains(role.Name) ? "checked": "") value="@role.Name"/>
+
+        <span class="ms-3">@role.Name</span>
+
+        <br />
+    }
+    <input type="submit" value="Save" class="btn btn-primary"/>
+</form>
+<hr />
+<a asp-action="UserList" class="btn btn-secondary">Back to UserList</a>
