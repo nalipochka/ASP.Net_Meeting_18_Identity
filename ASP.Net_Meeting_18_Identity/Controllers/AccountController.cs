@@ -1,7 +1,10 @@
 ﻿using ASP.Net_Meeting_18_Identity.Data;
 using ASP.Net_Meeting_18_Identity.Models.ViewModels.AccountViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace ASP.Net_Meeting_18_Identity.Controllers
 {
@@ -81,6 +84,72 @@ namespace ASP.Net_Meeting_18_Identity.Controllers
         {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [AllowAnonymous]
+        public IActionResult GoogleAuth()
+        {
+            string? redirectUrl = Url.Action("AuthRedirect", "Account");
+            var properties = signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
+            return new ChallengeResult("Google",properties);
+        }
+        [AllowAnonymous]
+        public IActionResult FacebookAuth()
+        {
+            string? redirectUrl = Url.Action("AuthRedirect", "Account");
+            var properties = signInManager.ConfigureExternalAuthenticationProperties("Facebook", redirectUrl);
+            return new ChallengeResult("Facebook",properties);
+        }
+
+        public async Task<IActionResult> AuthRedirect()
+        {
+            ExternalLoginInfo loginInfo = await signInManager.GetExternalLoginInfoAsync();
+            if (loginInfo == null)
+            {
+                return RedirectToAction("Login");
+            }
+            var loginResult = await signInManager.ExternalLoginSignInAsync(loginInfo.LoginProvider, loginInfo.ProviderKey, false);
+            string?[] userInfo =
+            {
+                loginInfo.Principal.FindFirst(ClaimTypes.Name)?.Value,
+                loginInfo.Principal.FindFirst(ClaimTypes.Email)?.Value,
+            };
+            if(loginResult.Succeeded)
+            {
+                return View(userInfo);
+            }
+            User user = new User
+            {
+                UserName = userInfo[0],
+                Email = userInfo[1]
+            };
+            var result =await userManager.CreateAsync(user);
+            if(result.Succeeded)
+            {
+                result = await userManager.AddLoginAsync(user, loginInfo);
+                if (result.Succeeded)
+                {
+                    await signInManager.SignInAsync(user, isPersistent: false);
+                    return View(userInfo);
+                }
+            }
+            else
+            {
+                User? findetUser = await userManager.FindByEmailAsync(userInfo[1]);
+                    //Users.FirstOrDefaultAsync(t => t.NormalizedEmail == user.Email!.ToUpper());
+                if(findetUser != null)
+                {
+                    await userManager.AddLoginAsync(findetUser, loginInfo);
+                    await signInManager.SignInAsync(findetUser, isPersistent: false);
+                    return View(userInfo);
+                }
+                
+            }
+            return RedirectToAction(nameof(AccessDenied));
+        }
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

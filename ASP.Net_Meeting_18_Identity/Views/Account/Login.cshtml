@@ -23,4 +23,7 @@
         <span asp-validation-for="IsPersistent" class="text-danger"></span>
     </div>
     <input type="submit" value="Login" class="btn btn-primary" />
+
+    <a asp-action="GoogleAuth" asp-controller="Account" class="btn btn-outline-info">Login with Google</a>
+    <a asp-action="FacebookAuth" asp-controller="Account" class="btn btn-outline-primary">Login with Facebook</a>
 </form>

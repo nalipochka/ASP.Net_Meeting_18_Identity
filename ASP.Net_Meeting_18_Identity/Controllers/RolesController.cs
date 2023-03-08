@@ -122,6 +122,6 @@ namespace ASP.Net_Meeting_18_Identity.Controllers
             await userManager.RemoveFromRolesAsync(user, deletedRoles);
             return RedirectToAction("Userlist");
         }
-
+        
     }
 }

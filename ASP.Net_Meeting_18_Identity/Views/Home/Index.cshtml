@@ -3,22 +3,6 @@
 }
 
 <div class="text-center">
-    @*<div class="d-flex justify-content-end">
-        <div class="mx-auto my-auto">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <p>@User.Identity.Name</p>
-                <form method="post" asp-controller="Account" asp-action="Logout">
-                    <input type="submit" value="Logout" />
-                </form>
-            }
-            else
-            {
-                <a asp-controller="Account" asp-action="Login">Login</a>
-                <a asp-controller="Account" asp-action="Register">Register</a>
-            }
-        </div>
-    </div>*@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
