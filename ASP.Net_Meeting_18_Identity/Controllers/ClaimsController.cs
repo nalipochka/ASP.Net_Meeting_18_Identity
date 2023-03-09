@@ -6,6 +6,7 @@ using System.Security.Claims;
 
 namespace ASP.Net_Meeting_18_Identity.Controllers
 {
+    [Authorize(Roles="admin")]
     public class ClaimsController : Controller
     {
         private readonly UserManager<User> userManager;
@@ -55,7 +56,7 @@ namespace ASP.Net_Meeting_18_Identity.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(string claimsInfo)
+        public async Task<IActionResult> Delete(string claimsInfo)// --- ???
         {
             User user = await userManager.GetUserAsync(HttpContext.User);
             if (user == null)
@@ -68,8 +69,9 @@ namespace ASP.Net_Meeting_18_Identity.Controllers
             await userManager.RemoveClaimAsync(user, claimForDelete);
             return RedirectToAction("Index");
         }
-        [Authorize(Roles ="admin,manager")]
+
+       // [Authorize(Roles ="admin,manager")]
        // [Authorize(Policy ="FrameworkPolicy")]
-        public IActionResult TestPolicy1() =>View("Index", User.Claims);
+       // public IActionResult TestPolicy1() =>View("Index", User.Claims);
     }
 }

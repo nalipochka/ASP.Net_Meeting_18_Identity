@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using ASP.Net_Meeting_18_Identity.Models.ViewModels.AdminViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ASP.Net_Meeting_18_Identity.Controllers
 {
+    [Authorize(Roles ="admin,manager")]
     public class AdminController : Controller
     {
         private readonly ShopDbContext dbContext;

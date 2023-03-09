@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ASP.Net_Meeting_18_Identity.Controllers
 {
-    //[Authorize(Roles="admin")]
+    [Authorize(Roles="admin")]
     public class UserController : Controller
     {
         private readonly UserManager<User> userManager;
