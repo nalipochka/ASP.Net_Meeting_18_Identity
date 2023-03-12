@@ -1,0 +1,5 @@
+﻿@model IEnumerable<Category>
+@{
+    SelectList list = new SelectList(Model, "Id", "Title");
+}
+    <select name="ParentCategoryId" asp-items="list"></select>

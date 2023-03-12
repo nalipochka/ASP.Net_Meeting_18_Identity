@@ -2,7 +2,7 @@
 
 }
 
-@model PanelViewModel
+@model IndexViewModel
 
 <div class="container">
     <div class="row">
@@ -17,10 +17,13 @@
         <div class="col-md-4">
             <a asp-action="AddCategory" asp-controller="Admin" class="btn btn-primary">Add Category</a>
         </div>
+        <div class="col-md-4">
+            <a asp-action="IndexCategory" asp-controller="Admin" class="btn btn-primary">Categories</a>
+        </div>
     </div>
 </div>
 
-<div class="row">
+<div class="row m-2">
     @foreach (var product in Model.Products)
     {
             <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
@@ -28,8 +31,11 @@
                     <img class="card-img-top" src=@(Model.Photos.Where(p=>p.ProductId==product.Id).FirstOrDefault()!.PhotoUrl) alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">@product.Title</h5>
-                        <p class="card-text">@product.Price</p>
+                    <p class="card-text">@product.Price <span>&nbsp;&#x20AC;</span></p>
                     </div>
+                <a asp-action="Details" asp-controller="Admin" asp-route-id="@product.Id" class="btn btn-sm btn-success">Details</a>
+                <a asp-action="Edit" asp-controller="Admin" asp-route-id="@product.Id" class="btn btn-sm btn-primary">Edit</a>
+                <a asp-action="Delete" asp-controller="Admin" asp-route-id="@product.Id" class="btn btn-sm btn-danger">Delete</a>
                 </div>
             </div>
     }

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using ASP.Net_Meeting_18_Identity.Transliterator;
 
 namespace ASP.Net_Meeting_18_Identity.Controllers
 {
@@ -120,7 +121,7 @@ namespace ASP.Net_Meeting_18_Identity.Controllers
             }
             User user = new User
             {
-                UserName = userInfo[0],
+                UserName = Transliterator.Transliterator.ConvertToTranslit(userInfo[0]!),
                 Email = userInfo[1]
             };
             var result =await userManager.CreateAsync(user);

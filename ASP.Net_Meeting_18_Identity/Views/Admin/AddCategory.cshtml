@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
 
 }
 
@@ -7,15 +6,45 @@
 
 <h2>Add category</h2>
 
-<form asp-action="AddCategory" method="post" enctype="multipart/form-data">
+<form asp-action="AddCategory" method="post" id="catForm">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Title" class="control-label"></label>
         <input asp-for="Title" class="form-control" />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
-  
     <div class="form-group">
-        <input type="submit" value="Add category :)" class="btn btn-primary"/>
+        <label asp-for="ParentCategoryId" class="control-label"></label>
+        <select asp-for="ParentCategoryId" class="form-control" asp-items="@ViewBag.ParentCategoryId"
+                onchange="getChildCategoriesAsync(event)">
+            <option value="0">None</option>
+        </select>
+    </div>
+    <div class="form-group" id="submitDiv">
+        <input type="submit" value="Add category :)" class="btn btn-primary" />
     </div>
 </form>
+
+@*@section Scripts{
+    <script type="text/javascript">
+        async function getChildCategoriesAsync(e) {
+            let parentId = e.target.Value;
+            let resp = await fetch(`/admin/getChildCategories/${parentId}`, {
+                method: "POST"
+            });
+            if(resp.ok ===true){
+                console.log(resp.status);
+                let htmlContent = await resp.text();
+                let div = document.getElementById("submitDiv");
+                let catForm = document.getElementById("catForm");
+                let newDiv = document.createElement("div");
+                newDiv.innerHTML = htmlContent;
+                newDiv.classList.add("form-group");
+                catForm.insertBefore(newDiv, div);
+            }
+
+            //console.log("Hello!");
+            //console.log(e);
+        }
+    </script>
+}*@

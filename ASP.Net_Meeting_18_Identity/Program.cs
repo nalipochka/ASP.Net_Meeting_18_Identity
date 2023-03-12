@@ -16,6 +16,8 @@ builder.Services.AddAutoMapper(typeof(UserProfiles));
 
 string connStr = builder.Configuration.GetConnectionString("testShopDb");
 
+builder.Services.AddSession();
+
 builder.Services.AddDbContext<ShopDbContext>(options =>
 options.UseSqlServer(connStr));
 
@@ -59,6 +61,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
 
 
 app.MapControllerRoute(
